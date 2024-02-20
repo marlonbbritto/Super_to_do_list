@@ -1,0 +1,51 @@
+{% extends 'shared/base.html'%}
+{% load static %}
+{% block content %}
+    <main class="row justify-content-center align-items-center m-0 flex-grow-1">
+        <section class="col-12 col-md-11 col-lg-11 container-fluid p-5">
+            <div class="col-12 main-content py-4 rounded-3 w-100 p-3 mb-2">
+                <h2 class="text-center text-white mb-3">Adicionar tarefas</h2>
+                <form class="row" action="{% url 'register_task' %}" method="POST">
+                    {% csrf_token %}
+                    {% for field in form.visible_fields %}
+                    <div class="form-floating mb-3 col-12 {% if field.label == 'Descreva sua tarefa' %}col-lg-8{% else %}col-lg-2{% endif %}">
+                        {{field}}
+                        <label for="floatingInput">{{field.label}}</label>
+                    </div>      
+                    {% endfor %}                                      
+                    <div class="form-floating mb-3 col-12 col-lg-2">
+                        <button type="submit" class="btn btn-outline-success p-3 container-fluid"><i class="bi bi-plus-square mx-2"></i>Adicionar</button>                        
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="col-12 py-4 rounded-3 w-100 p-3">
+                <h2 class="text-center text-dark mb-3">Suas tarefas</h2>
+                {% for tasks in tasks %}
+                <div class="row bg-light mb-5">
+                    
+                        <div class="form-floating col-12 col-lg-8 container-fluid">
+                            <div class="row ">
+                                <p class="text-center border p-3 fw-bold rounded-top-2 text-white main-content m-0">Descrição da tarefa</p>
+                                <p class="text-center border border-top-0 border-2 fw-bold m-0 p-1">{{tasks.task }}</p>
+                            </div>
+                        </div>
+                        <div class="form-floating col-12 col-lg-2 p-0">
+                            <p class="text-center border-1 border p-3 fw-bold rounded-2 text-white main-content m-0">Prazo</p>
+                            <p class="text-center border border-top-0 border-2 fw-bold m-0 p-1">{{ tasks.deadline }}</p>
+                        </div>
+                        <div class="form-floating col-12 col-lg-2 p-0">                 
+                            <p class="text-center border-1 border p-3 fw-bold rounded-2 text-white main-content m-0 align-items-center">Ações</p>  
+                            <div class="row text-center border border-top-0 border-2 fw-bold m-0">
+                                <p class="col-6 m-0"><button type="button" class="btn btn-outline-success  p-1 btn-sm"><i class="bi bi-check2-circle"> feito</i></button></p>
+                                <p class="col-6 m-0"><button type="button" class="btn btn-outline-danger p-1 btn-sm"><i class="bi bi-trash"> Excluir</i></button></p>
+
+                            </div>                                                        
+                        </div>                  
+                    
+                </div>            
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+{% endblock %}
