@@ -2,8 +2,8 @@ from datetime import datetime
 from django.db import models
 
 class Tarefas(models.Model):
-    user = models.CharField(max_length=100,null=False,blank=False)
-    task= models.CharField(max_length=100,null=False,blank=False)
+    user = models.TextField(max_length=100,null=False,blank=False)
+    task= models.TextField(max_length=100,null=False,blank=False)
     deadline = models.DateField(default=datetime.now,blank=False)
     status = models.BooleanField(default=True)
     done = models.BooleanField(default=False)

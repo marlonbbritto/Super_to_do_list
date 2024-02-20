@@ -8,15 +8,18 @@
                 <form class="row" action="{% url 'register_task' %}" method="POST">
                     {% csrf_token %}
                     {% for field in form.visible_fields %}
-                    <div class="form-floating mb-3 col-12 {% if field.label == 'Descreva sua tarefa' %}col-lg-8{% else %}col-lg-2{% endif %}">
-                        {{field}}
-                        <label for="floatingInput">{{field.label}}</label>
-                    </div>      
-                    {% endfor %}                                      
+                        {% if field.name != "user" %}
+                            <div class="form-floating mb-3 col-12 {% if field.label == 'Descreva sua tarefa' %}col-lg-8{% else %}col-lg-2{% endif %}">
+                                {{field}}
+                                <label for="floatingInput">{{field.label}}</label>
+                            </div> 
+                        {% endif %}     
+                    {% endfor %}   
+                    <!-- Adicionando o campo user como um campo oculto -->
+                    <input type="hidden" name="user" value="{{ request.user.username }}">
                     <div class="form-floating mb-3 col-12 col-lg-2">
                         <button type="submit" class="btn btn-outline-success p-3 container-fluid"><i class="bi bi-plus-square mx-2"></i>Adicionar</button>                        
                     </div>
-                    
                 </form>
             </div>
             <div class="col-12 py-4 rounded-3 w-100 p-3">
@@ -37,9 +40,9 @@
                         <div class="form-floating col-12 col-lg-2 p-0">                 
                             <p class="text-center border-1 border p-3 fw-bold rounded-2 text-white main-content m-0 align-items-center">Ações</p>  
                             <div class="row text-center border border-top-0 border-2 fw-bold m-0">
-                                <p class="col-6 m-0"><button type="button" class="btn btn-outline-success  p-1 btn-sm"><i class="bi bi-check2-circle"> feito</i></button></p>
-                                <p class="col-6 m-0"><button type="button" class="btn btn-outline-danger p-1 btn-sm"><i class="bi bi-trash"> Excluir</i></button></p>
-
+                                <p class="col-4 m-0"><button type="button" class="btn btn-outline-success  p-0 py-1 btn-sm"><i class="bi bi-check2-circle"> feito</i></button></p>
+                                <p class="col-4 m-0"><a href="{% url 'edit_task' tasks.id%}"><button type="button" class="btn btn-outline-warning  p-0 py-1 btn-sm"><i class="bi bi-pencil-square"> editar</i></button></a></p>
+                                <p class="col-4 m-0"><button type="button" class="btn btn-outline-danger p-0 py-1 btn-sm"><i class="bi bi-trash"> excluir</i></button></p>
                             </div>                                                        
                         </div>                  
                     

@@ -1,0 +1,20 @@
+{% extends 'shared/base.html'%}
+{% load static %}
+{% block content %}
+<div class="col-12 main-content py-4 rounded-3 w-100 p-3 mb-2">
+    <h2 class="text-center text-white mb-3">Editar tarefas</h2>
+    <form class="row" action="{% url 'edit_task' tasks_id %}" method="POST">
+        {% csrf_token %}
+        {% for field in form.visible_fields %}
+        <div class="form-floating mb-3 col-12 {% if field.label == 'Descreva sua tarefa' %}col-lg-8{% else %}col-lg-2{% endif %}">
+            {{field}}
+            <label for="floatingInput">{{field.label}}</label>
+        </div>      
+        {% endfor %}                                      
+        <div class="form-floating mb-3 col-12 col-lg-2">
+            <button type="submit" class="btn btn-outline-success p-3 container-fluid"><i class="bi bi-plus-square mx-2"></i>Editar</button>                        
+        </div>
+        
+    </form>
+</div>
+{% endblock %}

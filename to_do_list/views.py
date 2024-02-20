@@ -69,12 +69,25 @@ def logout(request):
     messages.success(request,'Logout efetuado')
     return redirect('login')
 def register_task(request):
-    if request.method == 'POST':
+    form = TaskForms
+    if request.method == 'POST':        
         form = TaskForms(request.POST)
         if form.is_valid():
-            task = form.cleaned_data['task']
-            deadline = form.cleaned_data['deadline']
-            user= request.user.username
-            new_task=Tarefas(task=task,deadline=deadline,user=user)
-            new_task.save()
+            form.instance.user =request.user            
+            form.save()
+            messages.success(request,'Task cadastrada com sucesso')
     return redirect('index')
+def delete_task(request):
+    pass
+def edit_task(request, tasks_id):
+    task = Tarefas.objects.get(id=tasks_id)
+    form = TaskForms(instance=task)
+
+    if request.method == 'POST':
+        form = TaskForms(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'task editada com sucesso')
+            return redirect('index')
+    return render(request,'to_do_list/edit_task.html',{'form':form,'tasks_id':tasks_id})
+    pass

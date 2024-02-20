@@ -1,4 +1,5 @@
 from django import forms
+from to_do_list.models import Tarefas
 
 class LoginForms(forms.Form):
     user_name = forms.CharField(
@@ -79,29 +80,27 @@ class RegisterForms(forms.Form):
             }
         ),
     )
-class TaskForms(forms.Form):
-    task=forms.CharField(
-        label='Descreva sua tarefa',
-        required=True,
-        max_length=100,
-        widget=forms.TextInput(
-            attrs={
+class TaskForms(forms.ModelForm):
+    class Meta:
+        model = Tarefas
+        exclude = ['status','done','data_atualizacao_concluida',]
+        labels = {
+            'task':'Descreva sua tarefa',
+            'deadline':'Prazo',
+            'user': "Usuário",
+        }
+        widgets={
+            'task':forms.TextInput(attrs={
                 'type':"text" ,
                 'class':"form-control ",                
                 'id':"floatingInput", 
                 'placeholder':"descreva sua tarefa",
-            }
-        )
-    )
-    deadline=forms.DateField(
-        label='Prazo',
-        required=True,          
-        widget=forms.DateInput(
-            attrs={
+            }),
+            'deadline':forms.DateInput(attrs={
                 'type':"date" ,
                 'class':"form-control" ,
                 'id':"floatingInput" ,
                 'placeholder':"monkeydluffy",
-            }
-        )
-    )
+            }),
+            'user': forms.HiddenInput(),
+        }
