@@ -11,7 +11,7 @@ def index(request):
         if request.method == 'POST':
             form = TaskForms(request.form)
         user=request.user.username
-        tasks= Tarefas.objects.filter(user=user)         
+        tasks= Tarefas.objects.filter(user=user,done=False)         
     else:
         messages.error(request, 'Necessario fazer Login')
         return redirect('login' )
@@ -77,8 +77,11 @@ def register_task(request):
             form.save()
             messages.success(request,'Task cadastrada com sucesso')
     return redirect('index')
-def delete_task(request):
-    pass
+def delete_task(request, tasks_id):
+    task = Tarefas.objects.get(id=tasks_id)
+    task.delete()
+    messages.success(request, 'task excluida com sucesso')
+    return redirect('index')    
 def edit_task(request, tasks_id):
     task = Tarefas.objects.get(id=tasks_id)
     form = TaskForms(instance=task)
@@ -90,4 +93,9 @@ def edit_task(request, tasks_id):
             messages.success(request, 'task editada com sucesso')
             return redirect('index')
     return render(request,'to_do_list/edit_task.html',{'form':form,'tasks_id':tasks_id})
-    pass
+def done_task(request,tasks_id):
+    task = Tarefas.objects.get(id=tasks_id)
+    task.done = True
+    task.save()
+    messages.success(request,'Tarefa finalizada com sucesso')
+    return redirect('index')

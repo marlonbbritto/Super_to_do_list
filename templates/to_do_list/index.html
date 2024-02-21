@@ -40,9 +40,9 @@
                         <div class="form-floating col-12 col-lg-2 p-0">                 
                             <p class="text-center border-1 border p-3 fw-bold rounded-2 text-white main-content m-0 align-items-center">Ações</p>  
                             <div class="row text-center border border-top-0 border-2 fw-bold m-0">
-                                <p class="col-4 m-0"><button type="button" class="btn btn-outline-success  p-0 py-1 btn-sm"><i class="bi bi-check2-circle"> feito</i></button></p>
+                                <p class="col-4 m-0"><a href="{% url 'done_task' tasks.id %}"><button type="button" class="btn btn-outline-success  p-0 py-1 btn-sm"><i class="bi bi-check2-circle"> feito</i></button></a></p>
                                 <p class="col-4 m-0"><a href="{% url 'edit_task' tasks.id%}"><button type="button" class="btn btn-outline-warning  p-0 py-1 btn-sm"><i class="bi bi-pencil-square"> editar</i></button></a></p>
-                                <p class="col-4 m-0"><button type="button" class="btn btn-outline-danger p-0 py-1 btn-sm"><i class="bi bi-trash"> excluir</i></button></p>
+                                <p class="col-4 m-0"><a href="{% url 'delete_task' tasks.id %}"><button type="button" class="btn btn-outline-danger p-0 py-1 btn-sm"><i class="bi bi-trash"> excluir</i></button></a></p>
                             </div>                                                        
                         </div>                  
                     
